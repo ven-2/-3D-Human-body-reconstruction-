@@ -76,7 +76,12 @@ uvicorn server:app --host 0.0.0.0 --port 8000
 ### STAR body model
 
 This project uses [STAR](https://star.is.tue.mpg.de/), a parametric human
-body model. The model weights are **not included** — they're distributed
+body model. `fit_star.py` is included as a **documented stub** — the fitting
+implementation itself is withheld, but the approach (two-stage joint +
+surface optimization, derived measurements, etc.) is described in
+[`docs/star_fitting.md`](docs/star_fitting.md).
+
+The model weights are **not included** either way — they're distributed
 under their own license by the Max Planck Institute. Download
 `STAR_NEUTRAL.npz` from the link above and place it at:
 
@@ -93,11 +98,12 @@ models/star/STAR_NEUTRAL.npz
 - Skeleton-guided cropping (`mesh_cleaner.py`) uses the averaged 3D joints to
   remove background geometry (walls, floor, other people) before sampling a
   clean point cloud for body-model fitting.
-- `fit_star.py` runs a two-stage fit: joint alignment first, then surface
-  (Chamfer) refinement of body shape only, to avoid the model "cheating" by
-  distorting pose to chase clothing geometry.
+- `fit_star.py` runs a two-stage fit (joint alignment, then shape-only
+  surface refinement) — see [`docs/star_fitting.md`](docs/star_fitting.md)
+  for details on why it's structured this way.
 
 ## License
 
 MIT — see [LICENSE](LICENSE). STAR model weights are subject to their own
 license from the Max Planck Institute for Intelligent Systems.
+

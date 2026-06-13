@@ -11,26 +11,6 @@ is withheld, but this page describes the approach.
 - **Cleaned point cloud** (`clean_pcd.ply`) — sampled from the cropped,
   outlier-filtered TSDF mesh (see `mesh_cleaner.py`).
 
-## Two-stage optimization
-
-**Stage 1 — skeleton alignment.**
-STAR's pose, shape (betas), global orientation and translation parameters
-are initialized near the observed pelvis position and optimized so that the
-model's regressed joint positions match the observed skeleton. Joints are
-weighted unevenly — core joints (pelvis, hips, shoulders) are trusted more
-than extremities, which are noisier from a single-viewpoint phone scan.
-
-**Stage 2 — shape refinement against the scan surface.**
-Once the skeleton roughly matches, pose is frozen and only shape (betas) and
-translation continue to optimize, against the cleaned point cloud using a
-nearest-neighbour (Chamfer-style) surface loss. Freezing pose here is
-deliberate: letting pose continue to vary against a clothed/noisy scan
-surface tends to cause the model to "cheat" by bending limbs to chase
-clothing bulges rather than adjusting actual body shape.
-
-A light regularization term keeps shape parameters and pose deviations from
-drifting to extreme, unrealistic values.
-
 ## Output
 
 - A fitted mesh in both the captured pose and a canonical T-pose

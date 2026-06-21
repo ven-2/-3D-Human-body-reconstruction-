@@ -2,8 +2,7 @@
 
 A real-time RGB-D perception pipeline that captures depth, color, segmentation
 and body-joint data from an iPhone (ARKit + LiDAR), streams it to a Python
-backend, and reconstructs a clean 3D human body mesh — including a fitted
-parametric body model (STAR) with derived measurements.
+backend, and reconstructs a clean 3D human body mesh 
 
 ## Pipeline overview
 
